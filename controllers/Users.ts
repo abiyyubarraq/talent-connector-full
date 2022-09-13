@@ -17,10 +17,11 @@ interface payload {
   }
 }
 
-export async function createUserHandler(req: Request, res: Response) {
+export async function createUserHandler(req: Request, res: Response, next: NextFunction) {
   try {
     const user = await createUser(req.body)
-    return res.send(omit(user.toJSON(), "password"))
+    // res.send(omit(user.toJSON(), "password"))
+    return next()
   } catch (e: any) {
     log.error(e)
     return res.status(409).send(e.message)

@@ -9,9 +9,9 @@ import requireUser from "../middleware/requireUser"
 import { createUserSchema, createUserSessionSchema } from "../Schema/userSchema"
 
 const router = express.Router()
-router.post("/register", validateRequest(createUserSchema), createUserHandler)
+router.post("/register", validateRequest(createUserSchema), createUserHandler, validateRequest(createUserSessionSchema), createUserSessionHandler)
 router.post("/login", validateRequest(createUserSessionSchema), createUserSessionHandler)
-router.get("/token/login", requireUser, getUserSessionsHandler)
+//router.get("/token/login", requireUser, getUserSessionsHandler)
 router.get("/login", requireUser, getUserByToken)
 router.delete("/logout", requireUser, invalidateUserSessionHandler)
 export = router

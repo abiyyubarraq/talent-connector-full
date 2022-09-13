@@ -46,7 +46,7 @@ const StartServer = () => {
     next()
   })
   /** Routes */
-  app.get("/check", (req, res, next) => res.json("wsssp"))
+  app.get("/api", (req, res, next) => res.json("wsssp"))
   app.use("/api/user", userRoutes)
   app.use("/api/profile", profileRoutes)
   app.use("/api/post", postRoutes)
