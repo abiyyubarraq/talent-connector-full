@@ -66,7 +66,7 @@ export async function likeAPost(req: Request, res: Response) {
     }
     // const postliked = await findSpesific({ _id: postId, likes: { $elemMatch: { user: userId } } })
     // if (postliked) return res.status(400).json({ msg: "Post already liked" })
-    const likedPost = await findAndUpdate({ postId }, { $push: { likes: { user: userId } } }, { new: true })
+    const likedPost = await findAndUpdate({ _id: postId }, { $push: { likes: { user: userId } } }, { new: true })
     return res.json(likedPost)
   } catch (e: any) {
     Logging.error(e)
@@ -85,7 +85,7 @@ export async function dellLike(req: Request, res: Response) {
     }
     // const postliked = await findSpesific({ _id: postId, likes: { $elemMatch: { user: userId } } })
     // if (postliked) return res.status(400).json({ msg: "Post already liked" })
-    const likedPost = await findAndUpdate({ postId }, { $pull: { likes: { user: userId } } }, { new: true })
+    const likedPost = await findAndUpdate({ _id: postId }, { $pull: { likes: { user: userId } } }, { new: true })
     return res.json(likedPost)
   } catch (e: any) {
     Logging.error(e)
@@ -99,7 +99,7 @@ export async function createComment(req: Request, res: Response) {
     const postId = get(req, "params.post_id")
     const user: any = await findUserById(userId)
     const body = req.body
-    const commentedPost = await findAndUpdate({ postId }, { $push: { comments: { ...body, user: userId, name: user.name, avatar: user.avatar } } }, { new: true })
+    const commentedPost = await findAndUpdate({ _id: postId }, { $push: { comments: { ...body, user: userId, name: user.name, avatar: user.avatar } } }, { new: true })
     return res.json(commentedPost)
   } catch (e: any) {
     Logging.error(e)
@@ -114,7 +114,7 @@ export async function dellComment(req: Request, res: Response) {
     const commentId = get(req, "params.comment_id")
     const user: any = await findUserById(userId)
     const body = req.body
-    const commentedPost = await findAndUpdate({ postId }, { $pull: { comments: { _id: commentId } } }, { new: true })
+    const commentedPost = await findAndUpdate({ _id: postId }, { $pull: { comments: { _id: commentId } } }, { new: true })
     return res.json(commentedPost)
   } catch (e: any) {
     Logging.error(e)

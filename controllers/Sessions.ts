@@ -21,7 +21,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   const session: any = await createSession(user._id, req.get("user-agent") || "")
 
   // create access token
-  const accessToken = createAccessToken({
+  const token = createAccessToken({
     user,
     session,
   })
@@ -32,7 +32,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   })
 
   // send refresh & access token back
-  return res.send({ accessToken, refreshToken })
+  return res.send({ token, refreshToken })
 }
 
 export async function invalidateUserSessionHandler(req: Request, res: Response) {
