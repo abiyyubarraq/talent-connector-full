@@ -50,6 +50,14 @@ const StartServer = () => {
   app.use("/api/user", userRoutes)
   app.use("/api/profile", profileRoutes)
   app.use("/api/post", postRoutes)
+  
+
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"))
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+    })
+  }
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"))
